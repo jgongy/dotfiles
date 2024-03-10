@@ -214,4 +214,13 @@ bar {
     }
 }
 
+input type:keyboard {
+  repeat_rate 25
+  repeat_delay 200
+}
+
+input type:pointer {
+  accel_profile "flat"
+}
+
 include /etc/sway/config.d/*
