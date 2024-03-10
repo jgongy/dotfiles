@@ -214,6 +214,9 @@ bar {
     }
 }
 
+#
+# Input Modifications:
+#
 input type:keyboard {
   repeat_rate 25
   repeat_delay 225
@@ -222,5 +225,12 @@ input type:keyboard {
 input type:pointer {
   accel_profile "flat"
 }
+
+#
+# Audio settings
+#
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 include /etc/sway/config.d/*
