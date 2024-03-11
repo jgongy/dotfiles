@@ -50,6 +50,9 @@ config.keys   = {
     action = wezterm.action.TogglePaneZoomState},
 }
 
+-- Ask for confirmation before closing any windows, panes, or tabs
+config.skip_close_confirmation_for_processes_named = {}
+
 -- config.key_tables = {
 --   copy_mode = {
 --     { mods   = "NONE",           key = "/",
