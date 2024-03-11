@@ -65,11 +65,12 @@ mount --mkdir /dev/<efi_partition> /mnt/boot/efi
 1. Install Arch Linux and other essential packages into the Arch Linux
 partition:
 * `base`, `linux`, `linux-firmware`: essential Arch Linux packages
+* `amd-ucode`: microcode updates for AMD cpu
 * `vim`: text editor, can be replaced with another editor like `emacs`
 * `refind`: boot loader, needed to discover and register Arch Linux; can
 be omitted if `refind` has already been set up in the EFI partition previously
 ```
-pacstrap -K /mnt base linux linux-firmware vim refind
+pacstrap -K /mnt base linux linux-firmware amd-ucode vim refind
 ```
 
 2. Generate an `fstab` file, which automatically identifies which partitions
