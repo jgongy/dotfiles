@@ -45,6 +45,12 @@ set hidden
 " Enables command line completion for Vim commands
 set wildmenu
 
+" Shows row and column number in the bottom right
+set ruler
+
+" Use new regex engine for opening TypeScript files
+set re=0
+
 " Colors code keywords
 syntax on
 
