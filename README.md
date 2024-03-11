@@ -304,3 +304,8 @@ yay -Y --devel --save
         running `C-<mod> + I` in `tmux`.
 
 **Installation is complete, reboot to start all services**
+
+
+## Self notes
+    * `git clone https://github.com/jgongy/dotfiles` and move files to their respective locations
+    * Set the `layout.css.devPixelsPerPx` setting in Firefox `about:config` to decrease browser size
