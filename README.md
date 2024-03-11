@@ -192,6 +192,7 @@ arch-chroot /mnt
     - Reboot
         ```
         exit
+        umount -R /mnt
         reboot
         ```
       and enter UEFI BIOS. Verify that `refind` will load before the Windows
