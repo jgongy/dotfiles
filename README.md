@@ -137,8 +137,8 @@ arch-chroot /mnt
         * `chrony`: network time protocol daemon recommended for maintaining
         system time
         ```
-        pacman -Syy chrony
-        systemctl enable chrony
+        pacman -S chrony
+        systemctl enable chronyd
         ```
     - Open `/etc/locale.gen` with editor and uncomment `en_US.UTF-8 UTF-8`
       and, if necessary, other locales. Generate the locales:
@@ -160,7 +160,7 @@ arch-chroot /mnt
     - Install and enable network management for connecting via Ethernet or Wifi:
         * `networkmanager`: fully functioning out of the box network manager
         ```
-        pacman -Syy networkmanager
+        pacman -S networkmanager
         systemctl enable NetworkManager
         ```
 
@@ -172,7 +172,7 @@ arch-chroot /mnt
     - Install `sudo`:
         * `sudo`: allows non-root users to run commands as root or other users
         ```
-        pacman -Syy sudo
+        pacman -S sudo
         ```
     - Create a non-root user with sudo privileges. This username is likely the
       one identifying your user session:
@@ -200,7 +200,7 @@ arch-chroot /mnt
 ### Install `yay` for community-driven packages
 1. Download and install yay
 ```
-sudo pacman -Syy --needed git base-devel
+sudo pacman -S --needed git base-devel
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
@@ -214,49 +214,49 @@ yay -Y --devel --save
     - Installing KDE Plasma:
         * `plasma-desktop`: minimal installation of KDE Plasma
         ```
-        sudo pacman -Syy plasma-desktop sddm-kcm
+        sudo pacman -S plasma-desktop sddm-kcm
         ```
     - Installing hyprland:
         ```
-        sudo pacman -Syy hyprland
+        sudo pacman -S hyprland
         ```
       If installing a fresh install of `hyprland` additionally install the
       `foot` terminal emulator and `wofi` program launcher:
         ```
-        sudo pacman -Syy foot wofi
+        sudo pacman -S foot wofi
         ```
 2. Install and enable display manager:
     * `sddm`: display manager that lets users choose which desktop
       environment or window manager to open.
     ```
-    sudo pacman -Syy sddm
+    sudo pacman -S sddm
     sudo systemctl enable sddm
     ```
 
 3. Install file manager:
     * `dolphin`: file manager; can be replaced with alternatives
     ```
-    sudo pacman -Syy dolphin
+    sudo pacman -S dolphin
     ```
 
 3. (Optional) Install additional programs
     - Alternative terminal emulator
         * `alacritty`: terminal emulator
         ```
-        sudo pacman -Syy alacritty
+        sudo pacman -S alacritty
         ```
     - Alternative program launcher
         * `anyrun`: alternative program launcher
         ```
-        sudo pacman -Syy rustup
+        sudo pacman -S rustup
         rustup update stable
-        yay -Syy anyrun-git
+        yay -S anyrun-git
         ```
     - Terminal multiplexer
         * `tmux`: terminal multiplexer to switch between programs
         ```
-        sudo pacman -Syy tmux
-        yay -Syy tmux-plugin-manager
+        sudo pacman -S tmux
+        yay -S tmux-plugin-manager
         ```
         If `tmux` plugins are already added in `.tmux.conf`, install by
         running `C-<mod> + I` in `tmux`.
@@ -273,7 +273,7 @@ outputs
   package) through PipeWire
 * `pipewire-pulse`: drop-in replacement for `pulseaudio` package
 ```
-sudo pacman -Syy pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
+sudo pacman -S pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
 # systemctl --user enable pipewire
 systemctl --user enable wireplumber
 systemctl --user enable pipewire-pulse
