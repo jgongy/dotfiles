@@ -58,7 +58,7 @@ mount /dev/<partition> /mnt
 
 3. Mount the EFI partition into the Arch Linux partition at `/mnt/boot/efi`:
 ```
-mount /dev/<efi_partition> /mnt/boot/efi
+mount --mkdir /dev/<efi_partition> /mnt/boot/efi
 ```
 
 ### Install Arch Linux onto partition
