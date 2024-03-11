@@ -4,9 +4,9 @@
 
 2. Configure Windows to use UTC instead of localtime. Open a `Command Prompt`
 as administrator and run:
-```
-reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
-```
+    ```
+    reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
+    ```
 
 **AFTER GETTING TO ARCH LINUX ISO TERMINAL, REMOVE INSTALLATION MEDIA**
 
@@ -15,15 +15,15 @@ reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation
 
 ### Create Arch Linux partition
 1. Identify the disk you want to install Arch Linux on:
-```fdisk -l```
-Each disk is identified by a label of the form `/dev/<label>`. For a SATA SSD
-or HDD, this is usually some form of `/dev/sd[a-z]` and for NVMe SSDs it can
-be labeled `/dev/nvme0n[0-9]`.
+    ```fdisk -l```
+    Each disk is identified by a label of the form `/dev/<label>`. For a SATA SSD
+    or HDD, this is usually some form of `/dev/sd[a-z]` and for NVMe SSDs it can
+    be labeled `/dev/nvme0n[0-9]`.
 
 2. After identifying the disk (`/dev/<disk>`), begin partitioning it with
-```
-fdisk /dev/<disk>
-```
+    ```
+    fdisk /dev/<disk>
+    ```
 
 3. For the installation we will be using the EFI partition created by the
 Windows installation, so we only need to format a root partition. Delete
@@ -34,58 +34,58 @@ reasons. Press `w` to write the changes. Now, `fdisk -l` will usually list the
 newly created partition as `/dev/<nvme_disk>p[0-9]` or `/dev/<sata_disk>[0-9]`.
 
 4. Format the new partition (`/dev/<partition>`):
-```
-mkfs.ext4 /dev/<partition>
-```
+    ```
+    mkfs.ext4 /dev/<partition>
+    ```
 
 5. Label the partition, needed by the `refind` boot loader to discover Arch Linux:
-```
-e2label /dev/<partition> "Arch Linux"
-```
+    ```
+    e2label /dev/<partition> "Arch Linux"
+    ```
 
 ### Mount the Arch Linux and EFI partition
 1. Identify the EFI partition, which is used to determine which OSes are
 available to boot at startup. The EFI can be identified by running
-```
-fdisk -l
-```
-and finding the partition with `Type` set as `EFI System`.
+    ```
+    fdisk -l
+    ```
+    and finding the partition with `Type` set as `EFI System`.
 
 2. Mount the Arch Linux partition at `/mnt`:
-```
-mount /dev/<partition> /mnt
-```
+    ```
+    mount /dev/<partition> /mnt
+    ```
 
 3. Mount the EFI partition into the Arch Linux partition at `/mnt/boot/efi`:
-```
-mount --mkdir /dev/<efi_partition> /mnt/boot/efi
-```
+    ```
+    mount --mkdir /dev/<efi_partition> /mnt/boot/efi
+    ```
 
 ### Install Arch Linux onto partition
 1. Install Arch Linux and other essential packages into the Arch Linux
 partition:
-* `base`, `linux`, `linux-firmware`: essential Arch Linux packages
-* `amd-ucode`: microcode updates for AMD cpu
-* `vim`: text editor, can be replaced with another editor like `emacs`
-* `refind`: boot loader, needed to discover and register Arch Linux; can
-be omitted if `refind` has already been set up in the EFI partition previously
-```
-pacstrap -K /mnt base linux linux-firmware amd-ucode vim refind
-```
+    * `base`, `linux`, `linux-firmware`: essential Arch Linux packages
+    * `amd-ucode`: microcode updates for AMD cpu
+    * `vim`: text editor, can be replaced with another editor like `emacs`
+    * `refind`: boot loader, needed to discover and register Arch Linux; can
+    be omitted if `refind` has already been set up in the EFI partition previously
+    ```
+    pacstrap -K /mnt base linux linux-firmware amd-ucode vim refind
+    ```
 
 2. Generate an `fstab` file, which automatically identifies which partitions
 to mount into the filesystem on startup and where to mount them:
-```
-genfstab -U /mnt >> /mnt/etc/fstab
-```
-Recommended: `cat /mnt/etc/fstab` to check that there should is one entry
-per `mount` performed on the `/mnt` directory in prior steps.
+    ```
+    genfstab -U /mnt >> /mnt/etc/fstab
+    ```
+    Recommended: `cat /mnt/etc/fstab` to check that there should is one entry
+    per `mount` performed on the `/mnt` directory in prior steps.
 
 ### Set up Arch Linux
 1. Change root into the newly installed Arch Linux system:
-```
-arch-chroot /mnt
-```
+    ```
+    arch-chroot /mnt
+    ```
 
 2. Make Arch Linux discoverable by `refind` boot loader.
     - Initialize `refind` in EFI partition:
@@ -164,7 +164,22 @@ arch-chroot /mnt
         systemctl enable NetworkManager
         ```
 
-5. Set up users:
+5. Create a swapfile. While not strictly necessary, is useful if using
+   hibernation. The recommended size is RAM size + two Gib
+    - Create the swapfile:
+        ```
+        dd if=/dev/zero of=/swapfile bs=1M count=<swap_size>k status=progress
+        chmod 0600 /swapfile
+        mkswap -U clear /swapfile
+        swapon /swapfile
+        ```
+    - Add the following lines to `/etc/fstab`
+        ```
+        # /swapfile
+        /swapfile none swap defaults 0 0
+        ```
+
+6. Set up users:
     - Set the root password:
         ```
         passwd
@@ -188,7 +203,7 @@ arch-chroot /mnt
         ```
         %wheel ALL=(ALL:ALL) ALL
         ```
-6. 
+7. 
     - Reboot
         ```
         exit
@@ -227,7 +242,32 @@ yay -Y --devel --save
         ```
         sudo pacman -S foot wofi
         ```
-2. Install and enable display manager:
+
+2. Setting up audio
+    - **Only necessary if running a window manager instead of a desktop
+      environment**
+        * `pipewire`: base package for audio support
+        * `wireplumber`: session manager that connects audio streams to appropriate
+        outputs
+        * `pipewire-audio`: additional packages for handling Bluetooth audio devices
+        * `pipewire-alsa`: route all applications using ALSA (a different audio
+        package) through PipeWire
+        * `pipewire-pulse`: drop-in replacement for `pulseaudio` package
+        ```
+        sudo pacman -S pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
+        # systemctl --user enable pipewire
+        systemctl --user enable wireplumber
+        systemctl --user enable pipewire-pulse
+        ```
+
+3. Install fonts
+    * `noto-fonts`, `noto-fonts-cjk`, `noto-fonts-emoji`: comprehensive font
+      family with full Unicode support
+    ```
+    sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
+    ```
+    
+4. Install and enable display manager:
     * `sddm`: display manager that lets users choose which desktop
       environment or window manager to open.
     ```
@@ -235,13 +275,13 @@ yay -Y --devel --save
     sudo systemctl enable sddm
     ```
 
-3. Install file manager:
+5. Install file manager:
     * `dolphin`: file manager; can be replaced with alternatives
     ```
     sudo pacman -S dolphin
     ```
 
-3. (Optional) Install additional programs
+6. (Optional) Install additional programs
     - Alternative terminal emulator
         * `alacritty`: terminal emulator
         ```
@@ -262,23 +302,5 @@ yay -Y --devel --save
         ```
         If `tmux` plugins are already added in `.tmux.conf`, install by
         running `C-<mod> + I` in `tmux`.
-
-### Setting up audio
-**Only necessary if running a window manager instead of a desktop
-environment**
-1. Install necessary audio packages
-* `pipewire`: base package for audio support
-* `wireplumber`: session manager that connects audio streams to appropriate
-outputs
-* `pipewire-audio`: additional packages for handling Bluetooth audio devices
-* `pipewire-alsa`: route all applications using ALSA (a different audio
-  package) through PipeWire
-* `pipewire-pulse`: drop-in replacement for `pulseaudio` package
-```
-sudo pacman -S pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
-# systemctl --user enable pipewire
-systemctl --user enable wireplumber
-systemctl --user enable pipewire-pulse
-```
 
 **Installation is complete, reboot to start all services**
