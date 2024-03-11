@@ -1,0 +1,16 @@
+{
+    "editor.rulers": [
+        80
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<C-w>"],
+            "commands" : ["workbench.action.closeActiveEditor"],
+        },
+        {
+            "before": ["<C-p>"],
+            "commands" : ["workbench.action.quickOpen"],
+        }
+    ],
+    "editor.minimap.enabled": false
+}
