@@ -7,12 +7,17 @@ local config = wezterm.config_builder()
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
-config.color_scheme = "Google (dark) (terminal.sexy)"
-
 if wezterm.target_triple == "aarch64-apple-darwin" or wezterm.target_triple == "x86_64-apple-darwin" then
   config.font_size  = 12.5
-elseif wezterm.target_truple == "x86_64-unknown-linux-gnu" then
+  config.color_scheme = "Google Dark (Gogh)"
+  config.inactive_pane_hsb = {
+    hue        = 1,
+    saturation = 1,
+    brightness = 1,
+  }
+elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
   config.font_size  = 8.5
+  config.color_scheme = "Google Dark (base16)"
 end
 
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
