@@ -8,7 +8,12 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 config.color_scheme = "Google (dark) (terminal.sexy)"
-config.font_size    = 8.5
+
+if wezterm.target_triple == "aarch64-apple-darwin" or wezterm.target_triple == "x86_64-apple-darwin" then
+  config.font_size  = 12.5
+elseif wezterm.target_truple == "x86_64-unknown-linux-gnu" then
+  config.font_size  = 8.5
+end
 
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys   = {
