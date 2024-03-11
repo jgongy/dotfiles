@@ -16,8 +16,6 @@ setopt INC_APPEND_HISTORY
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-alias dc="docker compose"
-
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
@@ -38,7 +36,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+# force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -71,10 +69,20 @@ alias ls='ls --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-setopt noautomenu
-setopt nomenucomplete
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
+alias dc="docker compose"
+
+# .inputrc settings ported to zsh
+unsetopt beep            # Disable bell sound
+bindkey -v               # Enable vim editing mode
+
+bindkey '^R'   history-incremental-search-backward
+bindkey '\e[A' history-beginning-search-backward
+bindkey '\e[B' history-beginning-search-forward
+
+setopt NOAUTOMENU          # Tab cycles through files that partially match
 
