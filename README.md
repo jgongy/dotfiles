@@ -191,6 +191,7 @@ arch-chroot /mnt
 6. 
     - Reboot
         ```
+        exit
         reboot
         ```
       and enter UEFI BIOS. Verify that `refind` will load before the Windows
