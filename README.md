@@ -216,15 +216,16 @@ to mount into the filesystem on startup and where to mount them:
 
 ### Install `yay` for community-driven packages
 1. Download and install yay
-```
-sudo pacman -S --needed git base-devel
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-cd ..
-rm -rf yay
-yay -Y --devel --save
-```
+    ```
+    sudo pacman -S git less
+    sudo pacman -S --needed base-devel
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+    rm -rf yay
+    yay -Y --devel --save
+    ```
 
 ### Set up display manager and desktop environment
 1. Install desktop environment or window manager. Can install one or many:
