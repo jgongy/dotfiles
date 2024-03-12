@@ -20,6 +20,8 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
   config.color_scheme = "Google Dark (base16)"
 end
 
+config.enable_tab_bar = false
+
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys   = {
   { mods   = "LEADER|SHIFT",   key = "\"",
