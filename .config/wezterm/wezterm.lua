@@ -22,23 +22,23 @@ end
 
 config.enable_tab_bar = false
 
-config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { mods = "CTRL", key = "Space", timeout_milliseconds = 5000 }
 config.keys   = {
   { mods   = "LEADER|SHIFT",   key = "\"",
     action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" }},
   { mods   = "LEADER|SHIFT",   key = "%",
     action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" }},
-  { mods   = "LEADER|CTRL",    key = "k",
+  { mods   = "LEADER",         key = "k",
     action = wezterm.action { ActivatePaneDirection = "Up" }},
-  { mods   = "LEADER|CTRL",    key = "j",
+  { mods   = "LEADER",         key = "j",
     action = wezterm.action { ActivatePaneDirection = "Down" }},
-  { mods   = "LEADER|CTRL",    key = "h",
+  { mods   = "LEADER",         key = "h",
     action = wezterm.action { ActivatePaneDirection = "Left" }},
-  { mods   = "LEADER|CTRL",    key = "l",
+  { mods   = "LEADER",         key = "l",
     action = wezterm.action { ActivatePaneDirection = "Right" }},
   { mods   = "LEADER",         key = "[",
     action = wezterm.action.ActivateCopyMode},
-  { mods   = "LEADER",           key = "x",
+  { mods   = "LEADER",         key = "x",
     action = wezterm.action.CloseCurrentPane { confirm = true }},
   { mods   = "CTRL",           key = "w",
     action = wezterm.action.CloseCurrentTab { confirm = true }},
@@ -50,6 +50,25 @@ config.keys   = {
     action = wezterm.action.TogglePaneZoomState},
   { mods   = "LEADER",         key = "z",
     action = wezterm.action.TogglePaneZoomState},
+  { mods   = "LEADER",         key = "N",
+    action = wezterm.action.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = "Enter the name for the workspace" },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:perform_action(
+            wezterm.action.SwitchToWorkspace {
+              name = line,
+            },
+            pane
+          )
+        end
+      end),
+    }
+  },
 }
 
 -- Ask for confirmation before closing any windows, panes, or tabs
