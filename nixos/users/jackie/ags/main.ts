@@ -1,15 +1,10 @@
-const myLabel = Widget.Label({
-    label: 'some example content',
-});
-
-const myBar = Widget.Window({
-    name: 'bar',
-    anchor: ['top', 'left', 'right'],
-    child: myLabel,
-});
+import { forMonitors } from "lib/utils";
+import { Bar } from "widgets/bar/Bar";
+import { NotificationPopups } from "widgets/notifications/notificationPopups";
 
 App.config({
-  windows: () => [
-    myBar,
-  ],
-});
+    windows: () => [
+        ...forMonitors(NotificationPopups),
+        Bar,
+    ]
+})

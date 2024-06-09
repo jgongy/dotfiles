@@ -6,8 +6,10 @@
   ];
 
   home.packages = with pkgs; [
+    bun
     esbuild
     gtk3
+    libnotify
   ];
 
   programs.ags = {

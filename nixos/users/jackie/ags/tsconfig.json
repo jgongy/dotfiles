@@ -15,5 +15,8 @@
             "./node_modules/@girs"
         ],
         "skipLibCheck": true
-    }
+    },
+    "include": [
+        "**/*.ts",
+    ],
 }
