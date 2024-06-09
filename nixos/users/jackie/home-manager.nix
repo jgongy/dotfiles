@@ -16,7 +16,11 @@
     ./coding.nix
   ];
 
-  nixpkgs = {};
+  nixpkgs = {
+    config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "discord"
+    ];
+  };
 
   home = {
     username = "jackie";
@@ -33,6 +37,7 @@
 
   home.packages = with pkgs; [
     firefox
+    discord
   ];
 
   programs.home-manager.enable = true;

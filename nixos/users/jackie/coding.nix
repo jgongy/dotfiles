@@ -24,5 +24,6 @@
     "editor.rulers" = [
       80
     ];
+    "editor.tabsize" = 2;
   };
 }
