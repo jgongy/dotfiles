@@ -25,5 +25,6 @@
       80
     ];
     "editor.tabsize" = 2;
+    "window.zoomLevel" = -1;
   };
 }

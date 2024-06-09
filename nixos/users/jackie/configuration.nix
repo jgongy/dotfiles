@@ -3,8 +3,8 @@
 {
   users.users.jackie = {
     isNormalUser = true;
-    initialPassword = "password";
     extraGroups = [ "wheel" ];
+    # initialPassword = "password";
     hashedPasswordFile = "/persist/passwords/jackie";
   };
 

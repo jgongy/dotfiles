@@ -10,6 +10,7 @@
     esbuild
     gtk3
     libnotify
+    unzip
   ];
 
   programs.ags = {

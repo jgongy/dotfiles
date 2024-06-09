@@ -52,11 +52,11 @@
 
   security.sudo.extraConfig = "Defaults lecture=never";
 
+  services.displayManager.sddm.enable = true;
   services.xserver = {
     enable = true;
-    displayManager.sddm.enable = true;
 
-    xkbOptions = "ctrl:nocaps";
+    xkb.options = "ctrl:nocaps";
   };
 
   # Set your time zone.
@@ -64,7 +64,7 @@
 
   users.users.root = {
     # mkpasswd -m sha-512 "<password>" > "/persist/passwords/<user>"
-    initialPassword = "password";
+    # initialPassword = "password";
     hashedPasswordFile = "/persist/passwords/root";
   };
 
@@ -77,31 +77,31 @@
   ];
 
   # Figure out how to move this into individual configuration files
-  systemd.services = {
-    home-manager-jackie = {
-      enable = true;
-      description = "Restore settings with home-manager";
-      # home-manager throws a not connected to network warning at the moment,
-      # need to investigate how to run this service after the network comes
-      # online. however, adding this dependency causes it to only run after
-      # login, which fails because hyprland automatically creates a config
-      # and home-manager currently has no configuration to overwrite existing
-      # files
-      # unitConfig = {
-      #   After = "network-online.target";
-      #   Wants = "network-online.target";
-      # };
-      serviceConfig = {
-        Type="oneshot";
-        Environment = "PATH=/run/current-system/sw/bin";
-        ExecStart = [
-            "/run/current-system/sw/bin/home-manager switch --flake /etc/nixos#jackie@gong-nix"
-        ];
-        User = "jackie";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-  };
+  # systemd.services = {
+  #   home-manager-jackie = {
+  #     enable = true;
+  #     description = "Restore settings with home-manager";
+  #     # home-manager throws a not connected to network warning at the moment,
+  #     # need to investigate how to run this service after the network comes
+  #     # online. however, adding this dependency causes it to only run after
+  #     # login, which fails because hyprland automatically creates a config
+  #     # and home-manager currently has no configuration to overwrite existing
+  #     # files
+  #     # unitConfig = {
+  #     #   After = "network-online.target";
+  #     #   Wants = "network-online.target";
+  #     # };
+  #     serviceConfig = {
+  #       Type="oneshot";
+  #       Environment = "PATH=/run/current-system/sw/bin";
+  #       ExecStart = [
+  #           "/run/current-system/sw/bin/home-manager switch --flake /etc/nixos#jackie@gong-nix"
+  #       ];
+  #       User = "jackie";
+  #     };
+  #     wantedBy = [ "multi-user.target" ];
+  #   };
+  # };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

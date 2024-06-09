@@ -1,15 +1,18 @@
 { ... } :
 {
   environment.persistence."/persist" = {
-    users.jackie = {
-      directories = [
-        "github"
-        ".mozilla"
-      ];
-      files = [
-        ".git-credentials"
-        ".config/hypr/hyprland.conf"
-      ];
-    };
+    directories = [
+      "/home/jackie"
+    ];
+    # users.jackie = {
+    #   directories = [
+    #     "github"
+    #     ".mozilla"
+    #     ".config"
+    #   ];
+    #   files = [
+    #     ".git-credentials"
+    #   ];
+    # };
   };
 }

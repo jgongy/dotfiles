@@ -104,10 +104,10 @@
       force_default_wallpaper = -1;
     };
 
-    windowrulev2 = [
-      "nomaximizerequest, class:.*"
-      # "noborder, onworkspace:1"
-    ];
+    # windowrulev2 = [
+    #   "nomaximizerequest, class:.*"
+    #   "noborder, onworkspace:1"
+    # ];
 
     "$mod" = "ALT";
     "$terminal" = "wezterm";
